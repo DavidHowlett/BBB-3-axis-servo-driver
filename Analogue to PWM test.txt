@@ -1,0 +1,39 @@
+//This program reads an analog input and outputs it as a pwm (the analog level is the duty cycle).
+//To check the speed of the program execution a toggle bit is included which changes state every time the code runs. 
+//The pwm is on pin P9_14, the analog in is on pin P9_36 and the toggling line is on P9_12.
+
+
+var b = require('bonescript');
+
+
+inputPin = "P9_36";
+outputPin = "P9_14";
+
+var tog = 0;
+
+//b.pinMode(outputPin, b.OUTPUT);
+b.pinMode("P9_12", b.OUTPUT);
+
+loop();
+
+function loop() {
+  var value = b.analogRead(inputPin);
+ // var value = 0.25;
+    b.analogWrite(outputPin, value);
+//    console.log(value);
+    
+    setTimeout(loop, 1);
+    
+    if(tog == 0)
+    {
+        b.digitalWrite("P9_12",b.HIGH);
+        tog = 1;
+    }
+    else
+    {
+        b.digitalWrite("P9_12",b.LOW);
+        tog = 0;
+    }
+    
+};
+
